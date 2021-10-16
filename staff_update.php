@@ -29,6 +29,6 @@ if ($status == false) {
     exit();
 } else {
     // 正常に実行された場合は一覧ページファイルに移動し，処理を実行する
-    header("Location:staff_input.php");
+    header("Location:staff_read.php");
     exit();
 }

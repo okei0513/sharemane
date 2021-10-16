@@ -18,12 +18,16 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
     // var_dump($result);
     // exit();
+
     $output = "";
 
     foreach ($result as $row) {
+        $output .= "<table>";
         $output .= "<tr>";
-        $output .= "<td>{$row["name"]}</td>";
+        $output .= "<td><a href=\"staff_input.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}\">{$row["name"]}</a></td>";
+
         $output .= "</tr>";
+        $output .= "</table>";
     }
     unset($row);
 } catch (Exception $e) {
@@ -61,7 +65,7 @@ if ($status == false) {
     <header>
         <div>グループ名の表示</div>
         <ul>
-            <li>ユーザー名</li>
+            <li><?= $name ?></li>
             <li><a href="tsuchi.html">通知</a></li>
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>
@@ -74,23 +78,8 @@ if ($status == false) {
         </div>
 
         <div>
-            <div><?= $output ?>
-                <li>
-                    <a href="staff_input.php">
-                        <?= $name ?></a>
-                </li>
-                <p>事業内容</p>
-            </div>
             <div>
-                <li><a href=""><?= $name ?></a></li>
-                <p>事業内容</p>
-            </div>
-            <div>
-                <li><a href="">メンバー３</a></li>
-                <p>事業内容</p>
-            </div>
-            <div>
-                <li><a href="">メンバー４</a></li>
+                <?= $output ?>
                 <p>事業内容</p>
             </div>
 

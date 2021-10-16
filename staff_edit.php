@@ -8,14 +8,18 @@ include("functions.php");
 check_session_id();
 
 // 送信されたidをgetで受け取る
-$id = $_GET['id'];
+$user_id = $_GET['user_id'];
+$group_id = $_GET['group_id'];
+// var_dump($_GET);
+// exit();
 
 // // DB接続&id名でテーブルから検索
 
 $pdo = connect_to_db();
-$sql = 'SELECT * FROM staff_page WHERE id=:id';
+$sql = 'SELECT * FROM staff_page  WHERE user_id=:user_id AND group_id=:group_id';
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+$stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
 $status = $stmt->execute();
 
 // fetch()で1レコード取得できる．
@@ -26,6 +30,8 @@ if ($status == false) {
 } else {
     $record = $stmt->fetch(PDO::FETCH_ASSOC);
 }
+// var_dump($record);
+// exit();
 
 ?>
 
@@ -60,16 +66,12 @@ if ($status == false) {
 
             <div>
                 <div>
-                    <input type="file" name="file" accept="image/*" capture="camera">
+                    <input type="file" name="file" value="<?= $record["file"] ?>">
+                    <!-- <input type="file" name="file" accept="image/*" capture="camera"> -->
                 </div>
 
                 <div>
-                    <p>サンプル</p>
-                    <p>こちらに入力ください</p>
-                </div>
-
-                <div>
-                    <input type="file" name="upfile" accept="image/*" capture="camera">
+                    <p><?= $record["writing"] ?></p>
                 </div>
 
                 <div>
