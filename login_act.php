@@ -2,9 +2,9 @@
 
 session_start();
 include("functions.php"); // DBファイルの読み込み
-$pdo = dbConnect();
+// $pdo = dbConnect();
 
-// $pdo = connect_to_db(); //関数実行
+$pdo = connect_to_db(); //関数実行
 $mail = $_POST["mail"];
 $password = $_POST["password"];
 

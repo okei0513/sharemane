@@ -3,13 +3,22 @@
 session_start();
 include('functions.php');
 check_session_id(); // idチェック関数の実行
-
-
 $pdo = connect_to_db();
 
-$sql = 'SELECT * FROM user';
+$name = $_SESSION["name"];
+
+$user_id = $_GET['user_id'];
+$group_id = $_GET['group_id'];
+// var_dump($_GET);
+// exit();
+$sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
+
 
 $stmt = $pdo->prepare($sql);
+// $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+$stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
+$stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+
 $status = $stmt->execute();
 
 if ($status == false) {
@@ -23,10 +32,7 @@ if ($status == false) {
     $output = "";
 
     foreach ($result as $record) {
-        $output .= "<tr>";
-        $output .= "<td>{$record["name"]}</td>";
-        // $output .= "<td>{$record["user_id"]}</td>";
-        $output .= "</tr>";
+        $output .= "{$record["group_code"]}";
     }
     unset($record);
 }
@@ -46,8 +52,8 @@ if ($status == false) {
 <body>
     <header>
         <ul>
-            <li><a href="user_entry.php"><?= $result[0]["name"] ?></a></li>
-            <li><a href="tsuchi.html">通知</a></li>
+            <li><a href="user_entry.php"><?= $name ?></a></li>
+            <!-- <li><a href="tsuchi.html">通知</a></li> -->
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>
     </header>
@@ -59,8 +65,9 @@ if ($status == false) {
             グループID：<input type="text"><button>確認</button>
         </p>
         <p>
-            グループに招待してもらう<br>
-            あなたのID：<input type="text"><button>コピー</button>
+            グループに招待する<br>
+            このグループID：<input id="group_code" type="text" name="group_code" value="<?= $output ?>" readonly>
+            <button onclick="copyToClipboard()">コピー</button>
         </p>
     </div>
     <footer>
@@ -69,6 +76,24 @@ if ($status == false) {
             <li>次へ</li>
         </ul>
     </footer>
+
+
+
+    <script>
+        // ここからグループIDをコピーするJS
+        function
+        copyToClipboard() {
+            //コピー対象をJavaScript上で変数として定義する
+            var group_code = document.getElementById("group_code");
+            //コピー対象のテキストを選択する
+            group_code.select();
+            //選択しているテキストをクリップボードにコピーする
+            document.execCommand("Copy");
+            //コピーをお知らせする
+            alert("コピーできました！:" + group_code.value);
+        }
+    </script>
+
 </body>
 
 </html>
