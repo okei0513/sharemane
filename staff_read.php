@@ -8,6 +8,8 @@ check_session_id(); // idチェック関数の実行
 var_dump($id);
 exit;
 
+// $pdo = dbConnect();
+
 $pdo = connect_to_db();
 
 $sql = 'SELECT * FROM staff_page WHERE user_id=:user_id AND group_id=:group_id';

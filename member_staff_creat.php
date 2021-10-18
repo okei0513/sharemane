@@ -1,5 +1,7 @@
 <?php
 include('functions.php');
+// $pdo = dbConnect();
+
 $pdo = connect_to_db();
 
 $sql = 'INSERT INTO group_member(id, group_id, user_id, business, is_admin)

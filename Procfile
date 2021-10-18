@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2 ../メンタリング/ShareMane
+web: vendor/bin/heroku-php-apache2 ./メンタリング/ShareMane

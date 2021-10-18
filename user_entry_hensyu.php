@@ -16,6 +16,8 @@ $user_code = $_SESSION["user_code"];
 $id = $_GET['id'];
 
 // DB接続&id名でテーブルから検索
+// $pdo = dbConnect();
+
 $pdo = connect_to_db();
 $sql = 'SELECT * FROM user WHERE id=:id';
 $stmt = $pdo->prepare($sql);

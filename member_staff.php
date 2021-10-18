@@ -2,6 +2,9 @@
 session_start(); // セッションの開始
 include('functions.php'); // 関数ファイル読み込み
 check_session_id(); // idチェック関数の実行
+
+// $pdo = dbConnect();
+
 $pdo = connect_to_db();
 $id = $_SESSION["id"];
 $name = $_SESSION["name"];

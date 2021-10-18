@@ -2,14 +2,13 @@
 
 session_start();
 include("functions.php"); // DBファイルの読み込み
+$pdo = dbConnect();
 
-$pdo = connect_to_db(); //関数実行
+// $pdo = connect_to_db(); //関数実行
 $mail = $_POST["mail"];
 $password = $_POST["password"];
 
 // DBにデータがあるかどうか検索
-// var_dump($_POST);
-// exit;
 
 $sql = 'SELECT * FROM user WHERE mail=:mail AND password=:password AND is_deleted=0';
 // var_dump($sql);

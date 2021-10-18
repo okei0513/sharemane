@@ -9,6 +9,8 @@ $user_code = $_POST['user_code'];
 session_start();
 include("functions.php");
 check_session_id();
+// $pdo = dbConnect();
+
 $pdo = connect_to_db();
 
 // idを指定して更新するSQLを作成（UPDATE文）

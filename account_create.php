@@ -22,6 +22,8 @@ $namae = $_POST['namae'];
 
 // DB接続情報
 include('functions.php');
+// $pdo = dbConnect();
+
 $pdo = connect_to_db();
 
 //SQLで表示⇨VALUESを編集

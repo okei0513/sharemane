@@ -2,9 +2,11 @@
 session_start(); // セッションの開始
 include('functions.php');
 check_session_id(); // idチェック関数の実行
-$pdo = connect_to_db();
+$pdo = dbConnect();
 
-$id = $_SESSION["id"];
+// $pdo = connect_to_db();
+
+$user_id = $_SESSION["id"];
 $name = $_SESSION["name"];
 
 $group_id = $pdo->lastInsertId(); //直近のログインのグループIDを取得
@@ -12,14 +14,14 @@ $group_id = $pdo->lastInsertId(); //直近のログインのグループIDを取
 
 try {
     // $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id';
-    $sql = 'SELECT * FROM group_member INNER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE group.name';
+    $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
 
     $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+    $stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
     $status = $stmt->execute();
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
-    // var_dump($result);
-    // exit();
     $output = "";
 
     foreach ($result as $record) {
@@ -32,6 +34,9 @@ try {
     echo $e->getMessage();
     exit();
 }
+// var_dump($result);
+// exit();
+
 
 $sql = 'SELECT * FROM user';
 
@@ -60,6 +65,7 @@ if ($status == false) {
 <body>
     <header>
         <div><a href="new_in.php"><?= $output ?></a></div>
+        <div><?= $group_id ?></div>
         <ul>
             <li><a href="user_entry.php">
                     <?= $name ?></a></li>

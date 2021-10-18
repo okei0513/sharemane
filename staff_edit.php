@@ -14,6 +14,7 @@ $group_id = $_GET['group_id'];
 // exit();
 
 // // DB接続&id名でテーブルから検索
+// $pdo = dbConnect();
 
 $pdo = connect_to_db();
 $sql = 'SELECT * FROM staff_page  WHERE user_id=:user_id AND group_id=:group_id';
@@ -71,7 +72,7 @@ if ($status == false) {
                 </div>
 
                 <div>
-                    <p><?= $record["writing"] ?></p>
+                    <!-- <p><?= $record["writing"] ?></p> -->
                 </div>
 
                 <div>
