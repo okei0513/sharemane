@@ -4,6 +4,8 @@ include('functions.php');
 check_session_id(); // idチェック関数の実行
 
 $pdo = connect_to_db();
+$id = $_SESSION["id"];
+$name = $_SESSION["name"];
 
 
 $sql = 'SELECT * FROM user';
@@ -49,8 +51,8 @@ if ($status == false) {
 <body>
     <header>
         <ul>
-            <li><?= $result[0]["name"] ?></li>
-            <li><a href="tsuchi.html">通知</a></li>
+            <li><?= $name ?></li>
+            <!-- <li><a href="tsuchi.html">通知</a></li> -->
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>
     </header>

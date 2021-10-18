@@ -21,7 +21,10 @@ $namae = $_POST['namae'];
 // (uniqid("userid_"));
 
 // DB接続情報
-include('functions.php');
+session_start(); // セッションの開始
+include('functions.php'); // 関数ファイル読み込み
+check_session_id(); // idチェック関数の実行
+
 // $pdo = dbConnect();
 
 $pdo = connect_to_db();
