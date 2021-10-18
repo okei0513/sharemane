@@ -7,6 +7,7 @@ check_session_id(); // idチェック関数の実行
 $pdo = connect_to_db();
 
 $name = $_SESSION["name"];
+$id = $_GET['id'];
 $user_id = $_GET['user_id'];
 $group_id = $_GET['group_id'];
 

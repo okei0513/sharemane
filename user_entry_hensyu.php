@@ -47,7 +47,7 @@ if ($status == false) {
 
 <body>
     <fieldset>
-        <p><a href="user_entry.php">閉じる</a></p>
+        <p><a href='user_entry.php?id={$record["id"]}'>閉じる</a></p>
 
         <div>
             <h2>登録内容</h2>

@@ -5,8 +5,6 @@ check_session_id(); // idチェック関数の実行
 // $pdo = dbConnect();
 
 $pdo = connect_to_db();
-
-
 // var_dump($_GET["user_id"]);
 // exit;
 
@@ -26,8 +24,6 @@ if ($status == false) {
     exit();
 } else {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // データの出力用変数（初期値は空文字）を設定
-    // var_dump($result);
-    // exit();
     $output = "";
     // var_dump($result);
     // exit;

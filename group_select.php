@@ -28,7 +28,12 @@ try {
     if (count($result) > 0) {
         foreach ($result as $record) {
             //グループの登録があれば、グループ名を呼び出す
-            $output .= "<p><a href=\"member_menu.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_code"]}</a></p>";
+            $output .= "<table>";
+            // $output .= "<tr>グループを選択</tr>";
+            // $output .= "<tr>";
+            $output .= "<td><a href=\"member_menu.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_code"]}</a></td>";
+            $output .= "</tr>";
+            $output .= "</table>";
         }
         unset($record);
     } else {
@@ -58,7 +63,7 @@ try {
 <body>
     <header>
         <!-- グループ名の表示 -->
-        <div>グループを選択<?= $output ?></a></div>
+        <div><?= $output ?></a></div>
         <ul>
             <!-- ユーザー名の表示 -->
             <li><a href="user_entry.php">

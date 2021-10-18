@@ -48,38 +48,10 @@ try {
     // $output .= "<p><a href=\"new_in.php?\">メンバーがいませんグループを作成してください</a></p>";
     // exit();
     // }
-    // var_dump($result);
-    // exit;    
 } catch (Exception $e) {
     echo $e->getMessage();
     exit();
 }
-
-// $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
-
-// $stmt = $pdo->prepare($sql);
-// $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
-// $stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
-// $status = $stmt->execute();
-
-// // // var_dump($user_id);
-// // // exit();
-// if ($status == false) {
-//     $error = $stmt->errorInfo(); //失敗時はエラー
-//     echo json_encode(["error_msg" => "{$error[2]}"]);
-//     exit();
-// } else {
-//     $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // データの出力用変数（初期値は空文字）を設定
-//     $array = "";
-//     // var_dump($result);
-//     // exit;    
-//     foreach ($result as $record) {
-//         // グループ名を取得したい！現在はグループコード(groupのnameがほしい。nameはuserテーブルにもある。セッション変数としても使用済)
-//         $array .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_code"]}</a></p>";
-//     }
-//     unset($row);
-// }
-
 ?>
 
 
@@ -120,9 +92,9 @@ try {
         </div>
     </div>
 
-    <footer>
-        <li><a href="member_menu.php">戻る</a></li>
-    </footer>
+    <!-- <footer>
+        <li><a href='member_menu.php?id={$record["id"]}'>戻る</a></li>
+    </footer> -->
 
 </body>
 

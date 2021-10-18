@@ -23,6 +23,15 @@ if ($status == false) {
     $error = $stmt->errorInfo();
     echo json_encode(["error_msg" => "{$error[2]}"]);
     exit();
+} else {
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
+    $output = "";
+
+    foreach ($result as $record) {
+    }
+    // $recordの参照を解除する．解除しないと，再度foreachした場合に最初からループしない
+    // 今回は以降foreachしないので影響なし
+    unset($record);
 }
 ?>
 
@@ -39,7 +48,7 @@ if ($status == false) {
 
 <body>
     <fieldset>
-        <button><a href="member_menu.php">閉じる</a></button>
+        <button><a href="group_select.php">閉じる</a></button>
         <div>
             <h2>登録内容</h2>
         </div>

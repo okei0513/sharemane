@@ -66,7 +66,7 @@ if ($status == false) {
         </p>
         <p>
             グループに招待する<br>
-            このグループID：<input id="group_code" type="text" name="group_code" value="<?= $output ?>" readonly>
+            このグループのID：<input id="group_code" type="text" name="group_code" value="<?= $output ?>" readonly>
             <button onclick="copyToClipboard()">コピー</button>
         </p>
     </div>
