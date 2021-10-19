@@ -7,7 +7,6 @@ check_session_id(); // idチェック関数の実行
 $pdo = connect_to_db();
 
 $name = $_SESSION["name"];
-$id = $_GET['id'];
 $user_id = $_GET['user_id'];
 $group_id = $_GET['group_id'];
 
@@ -16,7 +15,7 @@ $group_id = $_GET['group_id'];
 
 try {
     // $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id';
-    $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
+    $sql = 'SELECT user.id, user.user_code, user.mail, user.password, user.name AS user_name, group.id,group.group_code,group.name AS group_name,group_member.id,group_member.group_id,group_member.user_id FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id ';
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -32,7 +31,7 @@ try {
     if (count($result) > 0) {
         foreach ($result as $record) {
             //グループの登録があれば、グループ名を呼び出す
-            $output .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_code"]}</a></p>";
+            $output .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_name"]}</a></p>";
         }
         unset($record);
     } else {

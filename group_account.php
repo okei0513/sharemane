@@ -11,8 +11,7 @@ $user_id = $_GET['user_id'];
 $group_id = $_GET['group_id'];
 // var_dump($_GET);
 // exit();
-$sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
-
+$sql = 'SELECT user.id, user.user_code, user.mail, user.password, user.name AS user_name, group.id,group.group_code,group.name AS group_name,group_member.id,group_member.group_id,group_member.user_id FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
 
 $stmt = $pdo->prepare($sql);
 // $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -30,11 +29,16 @@ if ($status == false) {
     // var_dump($result);
     // exit();
     $output = "";
-
+    $array = "";
     foreach ($result as $record) {
-        $output .= "{$record["group_code"]}";
+
+        $output .= "<p><a href=\"member_menu.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">{$record["group_name"]}</a></p>";
     }
-    unset($record);
+
+    foreach ($result as $row) {
+        $array .= "{$row["group_code"]}";
+    }
+    unset($row);
 }
 ?>
 
@@ -52,7 +56,9 @@ if ($status == false) {
 <body>
     <header>
         <ul>
-            <li><a href="user_entry.php"><?= $name ?></a></li>
+            <li><a href="user_entry.php">
+                    <?= $record["user_name"] ?></a>
+            </li>
             <!-- <li><a href="tsuchi.html">通知</a></li> -->
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>
@@ -65,8 +71,8 @@ if ($status == false) {
             グループID：<input type="text"><button>確認</button>
         </p>
         <p>
-            グループに招待する<br>
-            このグループのID：<input id="group_code" type="text" name="group_code" value="<?= $output ?>" readonly>
+            <?= $output ?>グループに招待する<br>
+            グループのID：<input id="group_code" type="text" name="group_code" value="<?= $array ?>" readonly>
             <button onclick="copyToClipboard()">コピー</button>
         </p>
     </div>

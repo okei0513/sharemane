@@ -10,11 +10,9 @@ $user_id = $_SESSION["id"];
 $name = $_SESSION["name"];
 
 // $group_id = $pdo->lastInsertId(); //直近のログインのグループIDを取得
-
-
 try {
     // $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id';
-    $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id';
+    $sql = 'SELECT user.id, user.user_code, user.mail, user.password, user.name AS user_name, group.id,group.group_code,group.name AS group_name,group_member.id,group_member.group_id,group_member.user_id FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id ';
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -23,26 +21,33 @@ try {
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
     $output = "";
+    $array = "";
     // var_dump($result);
     // exit();
+
+    // foreach ($result as $user) {
+    //     $array .= "<div><a href=\"user_entry.php?user_id={$user["user_id"]}\">{$name}</a></div>";
+    // }
+    // unset($user);
+
     if (count($result) > 0) {
         foreach ($result as $record) {
             //グループの登録があれば、グループ名を呼び出す
-            $output .= "<table>";
-            // $output .= "<tr>グループを選択</tr>";
-            // $output .= "<tr>";
-            $output .= "<td><a href=\"member_menu.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_code"]}</a></td>";
-            $output .= "</tr>";
-            $output .= "</table>";
+            $output .= "<div><a href=\"member_menu.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_name"]}</a></div>";
         }
         unset($record);
     } else {
         echo "<p><a href=\"new_in.php?\">グループを作成する</a></p>";
+        // foreach ($result as $user) {
+        //     $array .= "<div><a href=\"user_entry.php?user_id={$user["user_id"]}\">・{$user["user_name"]}</a></div>";
+        // }
+        unset($user);
+
         // exit();
     }
 } catch (Exception $e) {
     echo $e->getMessage();
-    exit();
+    // exit();
 }
 // var_dump($result);
 // exit();
@@ -66,9 +71,7 @@ try {
         <div><?= $output ?></a></div>
         <ul>
             <!-- ユーザー名の表示 -->
-            <li><a href="user_entry.php">
-                    <?= $name ?></a></li>
-            </a></li>
+            <li><a href="user_entry.php"><?= $name ?></a></li>
             <!-- <li><a href="tsuchi.html">通知</a></li> -->
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>

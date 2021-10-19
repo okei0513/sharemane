@@ -1,9 +1,4 @@
 <?php
-$id = $_POST['id'];
-$namae = $_POST['namae'];
-$mail = $_POST['mail'];
-$user_code = $_POST['user_code'];
-
 
 //DBの接続
 session_start();
@@ -12,6 +7,12 @@ check_session_id();
 // $pdo = dbConnect();
 
 $pdo = connect_to_db();
+
+$id = $_POST['id'];
+$namae = $_POST['namae'];
+$mail = $_POST['mail'];
+$user_code = $_POST['user_code'];
+
 
 // idを指定して更新するSQLを作成（UPDATE文）
 $sql = "UPDATE user SET name=:name, mail=:mail, user_code=:user_code WHERE id=:id";

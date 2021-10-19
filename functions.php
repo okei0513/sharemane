@@ -1,9 +1,16 @@
 <?php
 function connect_to_db()
 {
-    $dbn = 'mysql:dbname=sharemane;charset=utf8;port=3306;host=localhost';
+    $dbn = 'mysql:/CLEARDB_DATABASE_URL=/b0131df80f3cb7:17df090c@us-cdbr-east-04.cleardb.com/heroku_25bb3d133c3b6f5?reconnect=true';
     $user = 'root';
     $pwd = '';
+    $options = array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+    );
+    $dbh = new PDO($dbn, $user, $pwd, $options);
+    return $dbh;
 
     try {
         return new PDO($dbn, $user, $pwd);

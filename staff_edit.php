@@ -10,13 +10,25 @@ check_session_id();
 // 送信されたidをgetで受け取る
 $user_id = $_GET['user_id'];
 $group_id = $_GET['group_id'];
-// var_dump($_GET);
-// exit();
-
-// // DB接続&id名でテーブルから検索
 // $pdo = dbConnect();
-
 $pdo = connect_to_db();
+
+$sql = 'SELECT user.id, user.user_code, user.mail, user.password, user.name AS user_name, group.id,group.group_code,group.name AS group_name,group_member.id,group_member.group_id,group_member.user_id FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+$stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
+$status = $stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
+$array = "";
+$output = "";
+foreach ($result as $record) {
+    // グループ名を取得したい！現在はグループコード(groupのnameがほしい。nameはuserテーブルにもある。セッション変数としても使用済)
+    $array .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">{$record["group_name"]}</a></p>";
+}
+unset($record);
+
+
+
 $sql = 'SELECT * FROM staff_page  WHERE user_id=:user_id AND group_id=:group_id';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -48,10 +60,10 @@ if ($status == false) {
 
 <body>
     <header>
-        <div>グループ名の表示</div>
+        <div><?= $array ?></div>
 
         <ul>
-            <li><a href="staff_input.php">戻る</a></li>
+            <li><a href="staff_input.php?group_id=<?= $group_id ?>&user_id=<?= $user_id ?>">戻る</a></li>
             <li><a href="">保存する</a></li>
         </ul>
     </header>

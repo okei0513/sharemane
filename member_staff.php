@@ -16,7 +16,7 @@ $group_id = $_GET['group_id'];
 // $group_id = $pdo->lastInsertId(); //直近のログインのグループIDを取得
 
 try {
-    $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
+    $sql = 'SELECT user.id, user.user_code, user.mail, user.password, user.name AS user_name, group.id,group.group_code,group.name AS group_name,group_member.id,group_member.group_id,group_member.user_id FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -32,14 +32,14 @@ try {
     // if (count($result) > 0) {
     foreach ($result as $record) {
         // グループ名を取得したい！現在はグループコード(groupのnameがほしい。nameはuserテーブルにもある。セッション変数としても使用済)
-        $array .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_code"]}</a></p>";
+        $array .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">{$record["group_name"]}</a></p>";
     }
     unset($record);
     foreach ($result as $row) {
         $output .= "<table>";
         $output .= "<tr>";
         // スタッフ名一覧を取得
-        $output .= "<td><a href=\"staff_input.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}\">・{$row["name"]}</a></td>";
+        $output .= "<td><a href=\"staff_input.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}\">・{$row["user_name"]}</a></td>";
         $output .= "</tr>";
         $output .= "</table>";
     }
@@ -68,7 +68,7 @@ try {
 <body>
     <header>
         <!-- グループ名の表示をしたい（現在はグループコードの表示） -->
-        <div><a href="new_in.php"><?= $array ?></div>
+        <div><?= $array ?></div>
         <ul>
             <!-- ユーザー名を表示 -->
             <li><a href="user_entry.php"><?= $name ?></a></li>

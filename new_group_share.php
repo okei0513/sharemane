@@ -22,9 +22,7 @@ if ($status == false) {
     $output = "";
 
     foreach ($result as $record) {
-        $output .= "<tr>";
-        $output .= "<td>{$record["group_code"]}</td>";
-        $output .= "</tr>";
+        $output .= "<div><a href=\"member_menu.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">・{$record["group_name"]}</a></div>";
     }
     unset($record);
 }
