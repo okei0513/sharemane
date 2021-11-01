@@ -25,9 +25,7 @@ foreach ($result as $record) {
     // グループ名を取得したい！現在はグループコード(groupのnameがほしい。nameはuserテーブルにもある。セッション変数としても使用済)
     $array .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">{$record["group_name"]}</a></p>";
 }
-unset($record);
-
-
+// unset($record);
 
 $sql = 'SELECT * FROM staff_page  WHERE user_id=:user_id AND group_id=:group_id';
 $stmt = $pdo->prepare($sql);
@@ -35,14 +33,14 @@ $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
 $status = $stmt->execute();
 
-// fetch()で1レコード取得できる．
-if ($status == false) {
-    $error = $stmt->errorInfo(); //失敗時はエラー
-    echo json_encode(["error_msg" => "{$error[2]}"]);
-    exit();
-} else {
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-}
+// // fetch()で1レコード取得できる．
+// if ($status == false) {
+//     $error = $stmt->errorInfo(); //失敗時はエラー
+//     echo json_encode(["error_msg" => "{$error[2]}"]);
+//     exit();
+// } else {
+//     $record = $stmt->fetch(PDO::FETCH_ASSOC);
+// }
 // var_dump($record);
 // exit();
 
@@ -70,8 +68,8 @@ if ($status == false) {
 
     <div>
         <div>
-            <div>ユーザー名</div>
-            <div>QRコード</div>
+            <h2><?= $record["user_name"] ?></h2>
+            <div>URL：<?= $_SERVER["REQUEST_URI"] ?></div>
         </div>
         <form action="staff_update.php" method="POST">
 

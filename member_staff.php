@@ -35,10 +35,10 @@ try {
         $array .= "<p><a href=\"group_account.php?user_id={$record["user_id"]}&group_id={$record["group_id"]}\">{$record["group_name"]}</a></p>";
     }
     unset($record);
+    // スタッフ名一覧を取得
     foreach ($result as $row) {
         $output .= "<table>";
         $output .= "<tr>";
-        // スタッフ名一覧を取得
         $output .= "<td><a href=\"staff_input.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}\">・{$row["user_name"]}</a></td>";
         $output .= "</tr>";
         $output .= "</table>";

@@ -48,18 +48,6 @@ if ($status == false) {
 
             header("staff_read.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}");
         }
-
-
-    //     foreach ($result as $record) {
-    //         $output .= "<tr>";
-    //         $output .= "<td>{$record["qr"]}</td>";
-    //         $output .= "<td>{$record["file"]}</td>";
-    //         $output .= "<td>{$record["writting"]}</td>";
-    //         $output .= "<td>{$record["request"]}</td>";
-    //         $output .= "<td>{$record["instagram"]}</td>";
-    //         $output .= "</tr>";
-    //     }
-    //     unset($record);
 }
 ?>
 
@@ -87,16 +75,15 @@ if ($status == false) {
 
     <div>
         <div>
-            <div><?= $record["user_name"] ?></div>
-            <div>URL：<?= $_SERVER["REQUEST_URI"] ?>
-            </div>
+            <h2><?= $record["user_name"] ?></h2>
+            <div>URL：<?= $_SERVER["REQUEST_URI"] ?></div>
         </div>
 
         <div>・事業内容</div>
 
         <div>
             <div>
-                <img src=" imgファイル/IMG_0372.jpg" title="image">
+                <img src="imgファイル/IMG_0372.jpg" title="image">
             </div>
 
             <div>
@@ -113,22 +100,17 @@ if ($status == false) {
                 <p>こちらに入力ください</p>
             </div>
             <!-- <form action="" method="post"></form>を使用。必ず、「enctype="multipart/form-data"」を記載すること -->
-
         </div>
 
         <div>
             <p>要望・お仕事依頼等...</p>
         </div>
 
-        <div>
+        <!-- <div>
             インスタグラムの連動させたい
-        </div>
+        </div> -->
 
     </div>
-
-    <footer>
-    </footer>
-
 </body>
 
 </html>
