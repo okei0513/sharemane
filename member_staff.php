@@ -2,9 +2,6 @@
 session_start(); // セッションの開始
 include('functions.php'); // 関数ファイル読み込み
 check_session_id(); // idチェック関数の実行
-
-// $pdo = dbConnect();
-
 $pdo = connect_to_db();
 $user_id = $_SESSION["id"];
 $name = $_SESSION["name"];
@@ -39,7 +36,7 @@ try {
     foreach ($result as $row) {
         $output .= "<table>";
         $output .= "<tr>";
-        $output .= "<td><a href=\"staff_input.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}\">・{$row["user_name"]}</a></td>";
+        $output .= "<td><a href=\"staff_act.php?user_id={$row["user_id"]}&group_id={$row["group_id"]}\">・{$row["user_name"]}</a></td>";
         $output .= "</tr>";
         $output .= "</table>";
     }
@@ -62,7 +59,7 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メンバーのスタッフ紹介画面</title>
+    <title>メンバーのスタッフ一覧画面</title>
 </head>
 
 <body>
@@ -71,7 +68,7 @@ try {
         <div><?= $array ?></div>
         <ul>
             <!-- ユーザー名を表示 -->
-            <li><a href="user_entry.php"><?= $name ?></a></li>
+            <li><a href="user_entry.php?id=<?= $user_id ?>"><?= $name ?></a></li>
             <!-- <li><a href="tsuchi.html">通知</a></li> -->
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>

@@ -24,14 +24,6 @@ if ($status == false) {
     $output = "";
 
     foreach ($result as $record) {
-        $output .= "<tr>";
-        $output .= "<td>{$record["name"]}</td>";
-        $output .= "<td>{$record["mail"]}</td>";
-        // $output .= "<td>{$record["user_id"]}</td>";
-        $output .= "<td>
-            <a href='user_entry_hensyu.php?id={$record["id"]}'>編集する</a>
-            </td>";
-        $output .= "</tr>";
     }
     unset($record);
 }
@@ -66,7 +58,7 @@ if ($status == false) {
 
     <footer>
         <ul>
-            <li><a href="new_in.php">戻る</a></li>
+            <li><a href="new_in.php?">戻る</a></li>
         </ul>
     </footer>
 

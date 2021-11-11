@@ -6,34 +6,30 @@
 session_start();
 include("functions.php");
 check_session_id();
-$id = $_SESSION["id"];
 $name = $_SESSION["name"];
 $mail = $_SESSION["mail"];
 $user_code = $_SESSION["user_code"];
-
-
 // 送信されたidをgetで受け取る
 $id = $_GET['id'];
 
-// DB接続&id名でテーブルから検索
-// $pdo = dbConnect();
-
 $pdo = connect_to_db();
-$sql = 'SELECT * FROM user WHERE id=:id';
+$sql = 'SELECT user.id AS user_id , user.user_code, user.mail, user.password, user.name FROM user WHERE id=:id';
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':id', $id, PDO::PARAM_STR);
 $status = $stmt->execute();
-
-// fetch()で1レコード取得できる．
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
+$output = "";
+$user_id = $id;
+foreach ($result as $record) {
+    // var_dump($result);
+    // exit();
+}
 if ($status == false) {
-    $error = $stmt->errorInfo(); //失敗時はエラー
+    $error = $stmt->errorInfo();
     echo json_encode(["error_msg" => "{$error[2]}"]);
     exit();
-} else {
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -47,17 +43,19 @@ if ($status == false) {
 
 <body>
     <fieldset>
-        <p><a href='user_entry.php?id={$record["id"]}'>閉じる</a></p>
+        <p><a href="user_entry.php?id=<?= $user_id ?>">閉じる</a></p>
+
+        <!-- <p><a href='user_entry.php?user_id={$record["user_id"]}'>閉じる</a></p> -->
 
         <div>
             <h2>登録内容</h2>
         </div>
-        <form action="user_entry_update.php" method="POST">
+        <form action="user_entry_update.php?user_id=<?= $user_id ?>" method="POST">
 
             <div>
-                <p>表示名：<input type="text" name="namae" value="<?= $name ?>"></p>
-                <p>メールアドレス：<input type="text" name="mail" value="<?= $mail ?>"></p>
-                <p>あなたのID：<input type="text" name="user_code" value="<?= $user_code ?>" readonly></p>
+                <p>表示名：<input type="text" name="namae" value="<?= $record["name"] ?>"></p>
+                <p>メールアドレス：<input type="text" name="mail" value="<?= $record["mail"] ?>"></p>
+                <p>あなたのID：<input type="text" name="user_code" value="<?= $record["user_code"] ?>" readonly></p>
             </div>
 
             <div>

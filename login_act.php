@@ -47,6 +47,6 @@ if (!$val) { // 該当データがないときはログインページへのリ�
     // exit();
     // セッション変数にID/mail/nameを挿入する
 
-    header("Location:group_select.php"); // 一覧ページへ移動
+    header("Location:group_select.php?id={$_SESSION["id"]}"); // 一覧ページへ移動
     exit();
 }

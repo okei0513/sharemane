@@ -26,14 +26,14 @@
                 <div>
                     パスワード: <input type="text" name="password" required="required" placeholder="Password">
                 </div>
-                <div>
+                <!-- <div>
                     <input type="checkbox" name="remenber">Remember Me
-                </div>
+                </div> -->
                 <div>
                     <button class="button">Sign In</button>
                 </div>
             </form>
-            <p><a href="">Forgot password?</a></p>
+            <!-- <p><a href="">Forgot password?</a></p> -->
 
 
         </fieldset>

@@ -4,36 +4,10 @@ session_start();
 include('functions.php');
 check_session_id(); // idチェック関数の実行
 $pdo = connect_to_db();
+
 $id = $_SESSION["id"];
 $name = $_SESSION["name"];
 
-// var_dump($_GET);
-// exit();
-// $sql = 'SELECT * FROM group_member LEFT OUTER JOIN `group` ON group_member.group_id = group.id INNER JOIN user ON group_member.user_id = user.id WHERE user_id=:user_id AND group_id=:group_id';
-
-
-// $stmt = $pdo->prepare($sql);
-// // $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
-// $stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
-// $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
-
-// $status = $stmt->execute();
-
-// if ($status == false) {
-//     $error = $stmt->errorInfo();
-//     echo json_encode(["error_msg" => "{$error[2]}"]);
-//     exit();
-// } else {
-//     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
-//     // var_dump($result);
-//     // exit();
-//     $output = "";
-
-//     foreach ($result as $record) {
-//         $output .= "{$record["group_code"]}";
-//     }
-//     unset($record);
-// }
 ?>
 
 

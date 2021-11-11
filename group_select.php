@@ -2,7 +2,6 @@
 session_start(); // セッションの開始
 include('functions.php');
 check_session_id(); // idチェック関数の実行
-// $pdo = dbConnect();
 
 $pdo = connect_to_db();
 
@@ -25,10 +24,6 @@ try {
     // var_dump($result);
     // exit();
 
-    // foreach ($result as $user) {
-    //     $array .= "<div><a href=\"user_entry.php?user_id={$user["user_id"]}\">{$name}</a></div>";
-    // }
-    // unset($user);
 
     if (count($result) > 0) {
         foreach ($result as $record) {
@@ -49,6 +44,12 @@ try {
     echo $e->getMessage();
     // exit();
 }
+foreach ($result as $user) {
+    $array .= "<div><a href=\"user_entry.php?user_id={$user["user_id"]}\">{$user["user_name"]}</a></div>";
+    // var_dump($array);
+    // exit();
+}
+unset($user);
 // var_dump($result);
 // exit();
 ?>
@@ -71,7 +72,7 @@ try {
         <div><?= $output ?></a></div>
         <ul>
             <!-- ユーザー名の表示 -->
-            <li><a href="user_entry.php"><?= $name ?></a></li>
+            <li><?= $array ?></li>
             <!-- <li><a href="tsuchi.html">通知</a></li> -->
             <li><a href="login_logout.php">ログアウト</a></li>
         </ul>

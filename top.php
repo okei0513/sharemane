@@ -44,19 +44,18 @@
                     <div>
                         パスワード: <input type="text" name="password" required="required" placeholder="Password">
                     </div>
-                    <div>
+                    <!-- <div>
                         <input type="checkbox" name="remenber">Remember Me
-                    </div>
+                    </div> -->
 
                     <div>
                         <button class="button">Sign In</button>
                     </div>
                 </form>
 
-                <div>
+                <!-- <div>
                     <!-- パスワードを忘れた場合-->
-                    <p><a href="password.html">Forgot password?</a></p>
-                </div>
+                <!-- <p><a href="password.html">Forgot password?</a></p></div> -->
                 <!-- 新規登録ボタン -->
                 <p><a href="account.php">NEW account</a></p>
 
